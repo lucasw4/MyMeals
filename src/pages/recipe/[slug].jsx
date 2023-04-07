@@ -1,3 +1,4 @@
+import NavBar from "@/components/navBar";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import data from "../../ingredient_and_instructions.json";
@@ -17,7 +18,8 @@ function Recipe() {
   console.log(data[slug]);
 
   return (
-    <div className='px-6 pb-10 bg-zinc-800'>
+    <div className='pb-10 bg-zinc-800'>
+      <NavBar />
       <div className='grid grid-cols-2 h-[75vh] border-b-2 border-zinc-500 mb-20'>
         <div className='flex flex-col justify-center items-center text-white'>
           <h1 className='text-5xl pb-2 mb-5 text-white pt-5 border-b-2 border-zinc-500 font-serif font-semibold'>
@@ -48,7 +50,7 @@ function Recipe() {
           </div>
         </div>
       </div>
-      <div className='flex justify-between'>
+      <div className='flex justify-between mx-10'>
         <div className='w-1/3'>
           <h1 className='text-5xl pb-4 text-white'>Ingredients</h1>
           {ingredientData.map((section) => (
