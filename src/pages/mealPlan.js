@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Link from "next/link";
 import NavBar from "@/components/navBar";
 import clientPromise from "@/lib/mongodb";
 import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
 const { MONGODB_DB } = process.env;
 
 const daysOfWeek = [
@@ -18,9 +18,9 @@ const daysOfWeek = [
 export default function RecipesPage(props) {
   const [selectedDay, setSelectedDay] = useState("Monday");
   return (
-    <div className="flex h-screen bg-zinc-800">
+    <div className='flex h-screen bg-zinc-800'>
       <NavBar />
-      <div className="w-1/5 h-full flex flex-col justify-center items-center">
+      <div className='w-1/5 h-full flex flex-col justify-center items-center'>
         {daysOfWeek.map((day) => (
           <button
             key={day}
@@ -33,29 +33,30 @@ export default function RecipesPage(props) {
           </button>
         ))}
       </div>
-      <div className="flex-1 h-full overflow-auto bg-white flex flex-col justify-center items-center">
-        <div className="p-4">
-          <h2 className="text-green-400 font-bold mb-4">
+      <div className='flex-1 h-full overflow-auto bg-white flex flex-col justify-center items-center'>
+        <div className='p-4'>
+          <h2 className='text-green-400 font-bold mb-4'>
             {selectedDay}'s Recipes
           </h2>
-          <div className="flex flex-col items-center w-full">
+          <div className='flex flex-col items-center w-full'>
             {props.mealPlans[0][selectedDay].map((recipe, index) => (
-              <Link
+              <div
                 key={index}
-                href={recipe.link}
-                className="p-4 border-solid hover:border-dotted border-black border-2 rounded-lg text-center hover:text-black transition-colors duration-300 items-center w-full"
+                className='p-4 border-solid hover:border-dotted border-black border-2 rounded-lg text-center hover:text-black transition-colors duration-300 items-center w-full'
               >
-                {recipe.title}
-                <Image
-                  src={recipe.image}
-                  width={150}
-                  height={150}
-                  alt={recipe.title}
-                ></Image>
-                <button className="bg-green-400 hover:bg-green-500 text-black font-bold py-2 px-4 rounded mr-4">
+                <Link key={index} href={recipe.link}>
+                  {recipe.title}
+                  <Image
+                    src={recipe.image}
+                    width={150}
+                    height={150}
+                    alt={recipe.title}
+                  ></Image>
+                </Link>
+                <button className='bg-green-400 hover:bg-green-500 text-black font-bold py-2 px-4 rounded mr-4'>
                   Delete
                 </button>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
