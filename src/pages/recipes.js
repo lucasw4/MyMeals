@@ -52,45 +52,6 @@ export default function Recipes({setExtraRecipeData}) {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-    
-  // useEffect(() => {
-  //   fetchFavourites();
-  // }, []);
-  // const fetchFavourites = () => {
-  //   axios
-  //     .get("/api/favourites?user_id=mymealuser")
-  //     .then((response) => {
-  //       console.log("fetchFavourites: " + response.data);
-  //       setFavouritesData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/favourites")
-  //     .then((response) => {
-  //       console.log("fetchFavourites: " + response.data);
-  //       setFavouritesData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-
-  //   axios
-  //     .get("/api/recipes")
-  //     .then((response) => {
-  //       setRecipesData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-
-
   
   const filteredRecipes = recipes
     .filter((recipe) => {
