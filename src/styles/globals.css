@@ -3,6 +3,32 @@
 @tailwind utilities;
 
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #ccc;
+  color: #fff;
+}
+
+.pagination button.active {
+  background-color: #333;
+  color: #fff;
+}
 /* Next.js default CSS
  
 :root {

@@ -6,6 +6,7 @@ import Recipe from "@/components/recipe/recipe";
 import NavBar from "@/components/navBar";
 import { useSearchParams } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
+import Pagination from "@/components/pagination";
 
 export default function Recipes({setExtraRecipeData}) {
 
@@ -26,23 +27,34 @@ export default function Recipes({setExtraRecipeData}) {
   );
   const [filters, setFilters] = useState(defaultFilters);
 
+  const [recipes, setRecipes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalRecipes, setTotalRecipes] = useState(0);
+  const [limit, setLimit] = useState(10);
+
+  useEffect(() => {
+    const fetchRecipes = async() => {
+      const res = await fetch(`/api/recipes?page=${currentPage}&limit=${limit}`);
+      const data = await res.json();
+      setRecipes(data.recipes);
+      setTotalPages(data.totalPages);
+      setTotalRecipes(data.totalRecipes);
+    };
+    fetchRecipes();
+  }, [currentPage, limit]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  
   const selectedCount = Object.values(filters).filter((value) => value).length;
   
   useEffect(() => {
-    fetchRecipes();
     fetchFavourites();
   }, []);
 
-  const fetchRecipes = () => {
-    axios
-      .get("/api/recipes")
-      .then((response) => {
-        setRecipesData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
 
   const fetchFavourites = () => {
     axios
@@ -80,7 +92,7 @@ export default function Recipes({setExtraRecipeData}) {
 
 
   
-  const filteredRecipes = recipesData
+  const filteredRecipes = recipes
     .filter((recipe) => {
       // Check whether the recipe name or description includes the filter text
       const nameIncludesFilter = recipe.name
@@ -413,6 +425,11 @@ export default function Recipes({setExtraRecipeData}) {
           </div>
         </div>
       </div>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
