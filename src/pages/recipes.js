@@ -7,6 +7,8 @@ import NavBar from "@/components/navBar";
 import { useSearchParams } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import Pagination from "@/components/pagination";
+import { toast } from 'react-toastify';
+import Image from "next/image";
 
 export default function Recipes({setExtraRecipeData}) {
 
@@ -50,23 +52,20 @@ export default function Recipes({setExtraRecipeData}) {
   
   const selectedCount = Object.values(filters).filter((value) => value).length;
   
-  useEffect(() => {
-    fetchFavourites();
-  }, []);
-
-
-
-  const fetchFavourites = () => {
-    axios
-      .get("/api/favourites?user_id=mymealuser")
-      .then((response) => {
-        console.log("fetchFavourites: " + response.data);
-        setFavouritesData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // useEffect(() => {
+  //   fetchFavourites();
+  // }, []);
+  // const fetchFavourites = () => {
+  //   axios
+  //     .get("/api/favourites?user_id=mymealuser")
+  //     .then((response) => {
+  //       console.log("fetchFavourites: " + response.data);
+  //       setFavouritesData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   useEffect(() => {
     axios
@@ -213,11 +212,18 @@ export default function Recipes({setExtraRecipeData}) {
   };
 
   
-
-  // const handleFavouriteClick = () => {
-  //   setIsFavourite(!isFavourite);
-  //   setIsFavouriteIconFilled(!isFavouriteIconFilled);
-  // };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      if (event.target.value !== "") {
+        setCurrentPage(1);
+        setLimit(1000);
+        toast.success("Searching for " + event.target.value);
+        console.log(event.target.value);
+      } else {
+        toast.error("Please enter a search term");
+      }
+    }
+  };
 
   return (
     <div>
@@ -230,14 +236,16 @@ export default function Recipes({setExtraRecipeData}) {
         {/* Filter dropdown */}
         <div className='space-y-2 p-4 sticky top-14 z-10 bg-gray-100'>
           {/* Filter text */}
-          <div className='mb-4'>
+          <div className='buttonIn mb-4'>
             <input
               className='border-solid border-2 border-gray-200 p-2 rounded-md w-full'
               type='text'
-              placeholder='Filter by recipe name or description'
+              placeholder='Filter by recipe name or description then press enter'
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
+            <button className='searchButton' type="submit" disabled><Image alt="enter key" src="/enter-key.png" width={32} height={32}/></button>
           </div>
           <details className='overflow-hidden rounded border border-gray-300 bg-gray-200 [&_summary::-webkit-details-marker]:hidden'>
             <summary className='flex items-center justify-between gap-2 p-4 text-gray-900 transition cursor-pointer'>
@@ -301,7 +309,7 @@ export default function Recipes({setExtraRecipeData}) {
                   </label>
                 </li>
                 {/* My Plan filter */}
-                <li>
+                {/* <li>
                   <label
                     for='FilterMealPlan'
                     className='inline-flex items-center gap-2'
@@ -319,27 +327,7 @@ export default function Recipes({setExtraRecipeData}) {
                       In my plan (not implemented){" "}
                     </span>
                   </label>
-                </li>
-                {/* Owned filter */}
-                <li>
-                  <label
-                    for='FilterCreated'
-                    className='inline-flex items-center gap-2'
-                  >
-                    <input
-                      type='checkbox'
-                      id='FilterCreated'
-                      className='w-5 h-5 border-gray-300 rounded'
-                      name='created'
-                      checked={filters.created}
-                      onChange={handleFilterCheckboxChanged}
-                    />
-                    <span className='text-sm font-medium text-gray-700'>
-                      {" "}
-                      Owned by me (not implemented){" "}
-                    </span>
-                  </label>
-                </li>
+                </li> */}
               </ul>
               <header className='flex items-center justify-between p-2 bg-gray-100 border-gray-100'>
                 {/* Difficulty filter section */}
