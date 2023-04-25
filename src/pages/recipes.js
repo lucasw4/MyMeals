@@ -29,6 +29,9 @@ export default function Recipes({setExtraRecipeData}) {
   );
   const [filters, setFilters] = useState(defaultFilters);
 
+  const selectedCount = Object.values(filters).filter((value) => value).length;
+
+
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -49,9 +52,7 @@ export default function Recipes({setExtraRecipeData}) {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  
-  const selectedCount = Object.values(filters).filter((value) => value).length;
-  
+    
   // useEffect(() => {
   //   fetchFavourites();
   // }, []);
@@ -67,26 +68,26 @@ export default function Recipes({setExtraRecipeData}) {
   //     });
   // };
 
-  useEffect(() => {
-    axios
-      .get("/api/favourites")
-      .then((response) => {
-        console.log("fetchFavourites: " + response.data);
-        setFavouritesData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/favourites")
+  //     .then((response) => {
+  //       console.log("fetchFavourites: " + response.data);
+  //       setFavouritesData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
 
-    axios
-      .get("/api/recipes")
-      .then((response) => {
-        setRecipesData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  //   axios
+  //     .get("/api/recipes")
+  //     .then((response) => {
+  //       setRecipesData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
 
 
